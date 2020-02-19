@@ -45,8 +45,9 @@
   <div class='map-overlay' id='features'><h2>Australian Wildfires on Christmas in 2019</h2>
   <div id='pd'><p>Top 4 affected areas from 2019 fires highlighted</p></div></div>
   <div class='fireInfo'>
-  <div><strong>Magnitude:</strong> <span id='mag'></span></div>
-  <div><strong>Location:</strong> <span id='loc'></span></div>
+  <div><strong>Brightness:</strong> <span id='mag'></span></div>
+  <div><strong>Latitude:</strong> <span id='lat'></span></div>
+  <div><strong>Longitude:</strong> <span id='long'></span></div>
   <div><strong>Time:</strong> <span id='time'></span></div>
 </div>
 
@@ -62,8 +63,55 @@ zoom: 3.9 // starting zoom
 });
 
 var magDisplay = document.getElementById('mag');
-var locDisplay = document.getElementById('loc');
-var dateDisplay = document.getElementById('time');
+var latDisplay = document.getElementById('lat');
+var longDisplay = document.getElementById('long');
+var timeDisplay = document.getElementById('time');
+
+var quakeID = null;
+
+map.on('mousemove', 'lab1-6tcxtj', (e) => {
+
+  map.getCanvas().style.cursor = 'pointer';
+  // Set variables equal to the current feature's magnitude, location, and time
+  var quakeMagnitude = e.features[0].properties.brightness;
+  var quakelat = e.features[0].properties.latitude;
+  var quakelong = e.features[0].properties.longitude;
+  var quakeDate = e.features[0].properties.acq_time;
+
+  // Check whether features exist
+  if (e.features.length > 0) {
+    // Display the magnitude, location, and time in the sidebar
+    magDisplay.textContent = quakeMagnitude;
+    latDisplay.textContent = quakelat;
+    longDisplay.textContent = quakelong;
+    timeDisplay.textContent = quakeDate;
+
+    // If quakeID for the hovered feature is not null,
+    // use removeFeatureState to reset to the default behavior
+    if (quakeID) {
+      map.removeFeatureState({
+        source: "lab1-6tcxtj",
+        id: quakeID
+      });
+    }
+
+    quakeID = e.features[0].id;
+
+    // When the mouse moves over the earthquakes-viz layer, update the
+    // feature state for the feature under the mouse
+    map.setFeatureState({
+      source: 'lab1-6tcxtj',
+      id: quakeID,
+    }, {
+      hover: true
+    });
+
+  }
+});
+
+
+
+
 
 </script>
 
