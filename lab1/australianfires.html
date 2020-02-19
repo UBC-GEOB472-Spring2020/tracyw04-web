@@ -31,7 +31,7 @@
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   border: 2px solid black;
   overflow: auto;
-  width: 20%;
+  width: 25%;
   background-color: #fff;
   border-radius: 3px;
 }
@@ -43,12 +43,11 @@
 <body>
   <div id="map"></div>
   <div class='map-overlay' id='features'><h2>Australian Wildfires on Christmas in 2019</h2>
-  <div id='pd'><p>Top 4 affected areas from 2019 fires highlighted</p></div></div>
+  <div id='pd'><p>Data provided by NASA's MODIS satellite imagery</p></div></div>
   <div class='fireInfo'>
-  <div><strong>Brightness:</strong> <span id='mag'></span></div>
+  <div><strong>Intensity of fire by brightness:</strong> <span id='mag'></span></div>
   <div><strong>Latitude:</strong> <span id='lat'></span></div>
   <div><strong>Longitude:</strong> <span id='long'></span></div>
-  <div><strong>Time:</strong> <span id='time'></span></div>
 </div>
 
 
@@ -65,7 +64,6 @@ zoom: 3.9 // starting zoom
 var magDisplay = document.getElementById('mag');
 var latDisplay = document.getElementById('lat');
 var longDisplay = document.getElementById('long');
-var timeDisplay = document.getElementById('time');
 
 var quakeID = null;
 
@@ -76,7 +74,6 @@ map.on('mousemove', 'lab1-6tcxtj', (e) => {
   var quakeMagnitude = e.features[0].properties.brightness;
   var quakelat = e.features[0].properties.latitude;
   var quakelong = e.features[0].properties.longitude;
-  var quakeDate = e.features[0].properties.acq_time;
 
   // Check whether features exist
   if (e.features.length > 0) {
@@ -84,7 +81,6 @@ map.on('mousemove', 'lab1-6tcxtj', (e) => {
     magDisplay.textContent = quakeMagnitude;
     latDisplay.textContent = quakelat;
     longDisplay.textContent = quakelong;
-    timeDisplay.textContent = quakeDate;
 
     // If quakeID for the hovered feature is not null,
     // use removeFeatureState to reset to the default behavior
