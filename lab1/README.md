@@ -1,6 +1,6 @@
 Welcome to the README file for my lab 1 project! 
 
-Link to map: https://ubc-geob472-spring2020.github.io/tracyw04-web/australianfires.html
+Link to map: https://ubc-geob472-spring2020.github.io/tracyw04-web/lab1/australianfires.html
 
 Reflective analysis:
 My goal within this interactive map is to showcase the active fires in Australia on Christmas (December 25, 2019) last year. Data was taken from the Moderate Resolution Imaging Spectroradiometer (MODIS) from NASA satellite imaging. The idea that I had before starting the map, was to showcase each incidence as a red circle, making proportional circles based off the brightness (ie. Intensity of fire). The purpose of this map was to show regions in Australia that were affected on Christmas, as well as point out the main regions with the largest fire incidences. Hence, my goal was to draw each point as a proportional symbol, while highlighting the top 4 affected zones as well as neighboring big cities. Highlighted areas would be shown using interactivity. 
