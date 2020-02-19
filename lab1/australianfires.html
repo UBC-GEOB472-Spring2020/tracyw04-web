@@ -1,26 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<title>Display a map with a custom style</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
-<link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
-<style>
-	body { margin: 0; padding: 0; }
-	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-</style>
+  <meta charset="utf-8" />
+  <title>Australian fires on Christmas 2019</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+  <style>
+	   body { margin: 0; padding: 0; }
+	    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+      .map-overlay {
+        position: absolute;
+        font-family: sans-serif;
+        margin-bottom: 40px;
+        margin-left: 5px;
+        padding: 5px;
+        width: 80%;
+        font-size: 14px;
+        color: #fff;
+      border-radius: 3px;
+      }
+
+    .fireInfo {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  border: 2px solid black;
+  overflow: auto;
+  width: 20%;
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+
+
+  </style>
 </head>
 <body>
-<div id="map"></div>
+  <div id="map"></div>
+  <div class='map-overlay' id='features'><h2>Australian Wildfires on Christmas in 2019</h2>
+  <div id='pd'><p>Top 4 affected areas from 2019 fires highlighted</p></div></div>
+  <div class='fireInfo'>
+  <div><strong>Magnitude:</strong> <span id='mag'></span></div>
+  <div><strong>Location:</strong> <span id='loc'></span></div>
+  <div><strong>Time:</strong> <span id='time'></span></div>
+</div>
+
+
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
 var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/tracyw04/ck6ss0zif0yyd1iprzv9l7twf', //hosted style id
-center: [133, -25], // starting position
-zoom: 3.7 // starting zoom
+center: [133.77, -26], // starting position
+zoom: 3.9 // starting zoom
 });
+
+var magDisplay = document.getElementById('mag');
+var locDisplay = document.getElementById('loc');
+var dateDisplay = document.getElementById('time');
+
 </script>
 
 </body>
