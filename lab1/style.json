@@ -87,7 +87,7 @@
                 "collapsed": true
             }
         },
-        "mapbox:uiParadigm": "components",
+        "mapbox:uiParadigm": "layers",
         "mapbox:decompiler": {
             "id": "ck6ss0zif0yyd1iprzv9l7twf",
             "componentVersion": "0.4.1",
@@ -102,13 +102,13 @@
                     "transitionLandOnZoom": false,
                     "color-school": "hsl(0, 0%, 17%)",
                     "color-greenspace": "hsl(100, 37%, 60%)",
-                    "color-water": "hsl(197, 50%, 91%)"
+                    "color-water": "hsl(197, 3%, 49%)"
                 },
                 "natural-features": {
                     "color-base": "hsl(0, 2%, 21%)",
                     "labelStyle": "Text only",
                     "density": 1,
-                    "color-water": "hsl(197, 50%, 91%)",
+                    "color-water": "hsl(197, 3%, 49%)",
                     "color-poi": "hsl(0, 2%, 21%)"
                 },
                 "point-of-interest-labels": {
@@ -144,7 +144,7 @@
                     "transitLabels": false,
                     "railwayStyle": "Solid",
                     "icon-color-scheme": "monochrome",
-                    "color-water": "hsl(197, 50%, 91%)"
+                    "color-water": "hsl(197, 3%, 49%)"
                 }
             },
             "strata": [
@@ -178,7 +178,8 @@
                         ["transit", "transit-labels"],
                         ["place-labels", "place-labels"],
                         "hillshade",
-                        "lab1-6tcxtj"
+                        "lab1-6tcxtj",
+                        "lab1-6tcxtj (1)"
                     ]
                 }
             ],
@@ -584,17 +585,17 @@
             }
         }
     },
-    "center": [133.38934577828877, -29.018078773069725],
-    "zoom": 3.7731343225550686,
+    "center": [149.63182624212095, -34.060572202493475],
+    "zoom": 7.165744428536636,
     "bearing": 0,
     "pitch": 0,
     "sources": {
         "composite": {
-            "url": "mapbox://mapbox.mapbox-streets-v8,tracyw04.9ll4n8f0,mapbox.mapbox-terrain-v2",
+            "url": "mapbox://tracyw04.9ll4n8f0,mapbox.mapbox-streets-v8,mapbox.mapbox-terrain-v2",
             "type": "vector"
         }
     },
-    "sprite": "mapbox://sprites/tracyw04/ck6ss0zif0yyd1iprzv9l7twf/6uwrfit4qdic9k7x90m80ko38",
+    "sprite": "mapbox://sprites/tracyw04/ck6ss0zif0yyd1iprzv9l7twf/cb9r73pru3wwwaj4686e6pwso",
     "glyphs": "mapbox://fonts/tracyw04/{fontstack}/{range}.pbf",
     "layers": [
         {
@@ -696,7 +697,7 @@
                     "cemetery",
                     "hsl(82, 11%, 4%)",
                     "glacier",
-                    "hsl(197, 42%, 100%)",
+                    "hsl(197, 0%, 72%)",
                     "pitch",
                     "hsl(100, 20%, 4%)",
                     "sand",
@@ -745,7 +746,7 @@
                 "line-join": "round"
             },
             "paint": {
-                "line-color": "hsl(197, 50%, 91%)",
+                "line-color": "hsl(197, 3%, 49%)",
                 "line-width": [
                     "interpolate",
                     ["exponential", 1.3],
@@ -776,7 +777,7 @@
             "source": "composite",
             "source-layer": "water",
             "layout": {},
-            "paint": {"fill-color": "hsl(197, 50%, 91%)"}
+            "paint": {"fill-color": "hsl(197, 3%, 49%)"}
         },
         {
             "id": "land-structure-polygon",
@@ -3329,7 +3330,7 @@
                 "text-pitch-alignment": "viewport",
                 "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]]
             },
-            "paint": {"text-color": "hsl(231, 18%, 57%)"}
+            "paint": {"text-color": "hsl(231, 0%, 90%)"}
         },
         {
             "id": "natural-line-label",
@@ -3511,8 +3512,8 @@
                     "match",
                     ["get", "class"],
                     ["bay", "ocean", "sea"],
-                    "hsl(206, 54%, 92%)",
-                    "hsl(231, 18%, 57%)"
+                    "hsl(206, 7%, 69%)",
+                    "hsl(231, 0%, 90%)"
                 ]
             }
         },
@@ -3575,8 +3576,8 @@
                     "match",
                     ["get", "class"],
                     ["bay", "ocean", "sea"],
-                    "hsl(206, 54%, 92%)",
-                    "hsl(231, 18%, 57%)"
+                    "hsl(206, 7%, 69%)",
+                    "hsl(231, 0%, 90%)"
                 ]
             }
         },
@@ -4258,13 +4259,28 @@
                     ["^", ["/", ["get", "brightness"], 477.4], 0.57],
                     10
                 ],
-                "circle-color": "hsl(0, 98%, 45%)"
+                "circle-color": [
+                    "case",
+                    [">=", ["get", "brightness"], 384],
+                    "hsl(0, 93%, 54%)",
+                    [">", ["get", "brightness"], 400],
+                    "hsl(0, 95%, 36%)",
+                    "hsl(0, 96%, 70%)"
+                ]
             }
+        },
+        {
+            "id": "lab1-6tcxtj (1)",
+            "type": "circle",
+            "source": "composite",
+            "source-layer": "lab1-6tcxtj",
+            "layout": {},
+            "paint": {}
         }
     ],
     "created": "2020-02-19T03:48:24.661Z",
     "id": "ck6ss0zif0yyd1iprzv9l7twf",
-    "modified": "2020-02-19T04:32:27.833Z",
+    "modified": "2020-02-19T09:03:21.986Z",
     "owner": "tracyw04",
     "visibility": "public",
     "draft": false
