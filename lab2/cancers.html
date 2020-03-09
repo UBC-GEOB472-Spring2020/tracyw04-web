@@ -62,27 +62,15 @@ border-radius: 3px;
 }
 
 .legend {
-background-color: #fff;
-border-radius: 3px;
-bottom: 30px;
-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-padding: 10px;
-position: absolute;
-right: 10px;
-z-index: 1;
+    line-height: 18px;
+    color: #555;
 }
-
-.legend h4 {
-margin: 0 0 10px;
-}
-
-.legend div span {
-border-radius: 50%;
-display: inline-block;
-height: 10px;
-margin-right: 5px;
-width: 10px;
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
 }
 
 </style>
@@ -104,28 +92,10 @@ width: 10px;
 var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/tracyw04/ck7kvsl4g4o9e1ipsacsssrwp', //hosted style id
-center: [-95, 39], // starting position
+center: [-96, 39], // starting position
 zoom: 3.8 // starting zoom
 });
-/*
-var layers = ['15-26','27-36','37-47','48-58','59+'];
-var colors = ['fcf4ba','f5cd66','f87912','f74802','7e2501'];
 
-for (i = 0; i < layers.length; i++) {
-  var layer = layers[i];
-  var color = colors[i];
-  var item = document.createElement('div');
-  var key = document.createElement('span');
-  key.className = 'legend-key';
-  key.style.backgroundColor = color;
-
-  var value = document.createElement('span');
-  value.innerHTML = layer;
-  item.appendChild(key);
-  item.appendChild(value);
-  legend.appendChild(item);
-}
-*/
 var StateDisplay = document.getElementById('State');
 var DeathsDisplay = document.getElementById('Deaths');
 var RateDisplay = document.getElementById('Rate');
@@ -169,6 +139,25 @@ map.on('mousemove', 'cancers', (e) => {
   }
 });
 
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
 
 </script>
 
