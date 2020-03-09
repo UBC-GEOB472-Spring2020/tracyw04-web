@@ -2,25 +2,148 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Lung and Brochus Cancer Deaths by U.S.A. state in 2016</title>
+<title>Lung and Bronchus Cancer Deaths Rate in U.S.A. in 2016</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
 <style>
-	body { margin: 0; padding: 0; }
-	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h2,
+h3 {
+  margin: 10px;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+p {
+  font-size: 0.85em;
+  margin: 10px;
+  text-align: left;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.map-overlay {
+	position: absolute;
+	font-family: sans-serif;
+	margin-bottom: 40px;
+	margin-left: 5px;
+	padding: 5px;
+	width: 80%;
+	font-size: 14px;
+	color: #000000;
+border-radius: 3px;
+}
+
+.stateInfo {
+ position: absolute;
+ bottom: 0;
+ left: 10px;
+ background: rgba(255, 255, 255, 0.8);
+ margin-right: 20px;
+ font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+ border: 2px solid black;
+ overflow: auto;
+ width: 26%;
+ background-color: #fff;
+ border-radius: 3px;
+}
+
+
 </style>
 </head>
 <body>
 <div id="map"></div>
+<div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Death Rate in U.S.A. in 2016</h2>
+	<div id='pd'><p>Data provided by CDC WONDER</p></div></div>
+   <div class='stateInfo'>
+   <div><strong>State:</strong> <span id='State'></span></div>
+   <div><strong>Total Deaths:</strong> <span id='Deaths'></span></div>
+   <div><strong>Crude Rate:</strong> <span id='cr'></span></div>
+<div class='map-overlay' id='legend'></div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
 var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/tracyw04/ck7kvsl4g4o9e1ipsacsssrwp', //hosted style id
-center: [-77.38, 39], // starting position
-zoom: 3 // starting zoom
+center: [-95, 39], // starting position
+zoom: 3.8 // starting zoom
 });
+/*
+var layers = ['15-26','27-36','37-47','48-58','59+'];
+var colors = ['fcf4ba','f5cd66','f87912','f74802','7e2501'];
+
+for (i = 0; i < layers.length; i++) {
+  var layer = layers[i];
+  var color = colors[i];
+  var item = document.createElement('div');
+  var key = document.createElement('span');
+  key.className = 'legend-key';
+  key.style.backgroundColor = color;
+
+  var value = document.createElement('span');
+  value.innerHTML = layer;
+  item.appendChild(key);
+  item.appendChild(value);
+  legend.appendChild(item);
+}
+*/
+var StateDisplay = document.getElementById('State');
+var DeathsDisplay = document.getElementById('Deaths');
+var crDisplay = document.getElementById('Crude Rate');
+var stateID = null;
+
+map.on('mousemove', 'cancers', (e) => {
+
+  map.getCanvas().style.cursor = 'pointer';
+  // Set variables equal to the current feature's state and deaths
+  var stateState = e.features[0].properties.State;
+  var stateDeaths = e.features[0].properties.Deaths;
+  var statecr = e.features[0].properties.cr;
+
+  // Check whether features exist
+  if (e.features.length > 0) {
+    // Display the magnitude, location, and time in the sidebar
+    StateDisplay.textContent = stateState;
+    DeathsDisplay.textContent = stateDeaths;
+    crDisplay.textContent = statecr;
+
+    // If stateID for the hovered feature is not null,
+    // use removeFeatureState to reset to the default behavior
+    if (stateID) {
+      map.removeFeatureState({
+        source: "cancers",
+        id: stateID
+      });
+    }
+
+    stateID = e.features[0].id;
+
+    // When the mouse moves over the cancers layer, update the
+    // feature state for the feature under the mouse
+    map.setFeatureState({
+      source: 'cancers',
+      id: stateID,
+    }, {
+      hover: true
+    });
+
+  }
+});
+
+
 </script>
 
 </body>
