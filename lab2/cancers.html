@@ -71,7 +71,7 @@ border-radius: 3px;
    <div class='stateInfo'>
    <div><strong>State:</strong> <span id='State'></span></div>
    <div><strong>Total Deaths:</strong> <span id='Deaths'></span></div>
-   <div><strong>Crude Rate:</strong> <span id='cr'></span></div>
+   <div><strong>Crude Rate:</strong> <span id='Rate'></span></div>
 <div class='map-overlay' id='legend'></div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
@@ -102,7 +102,7 @@ for (i = 0; i < layers.length; i++) {
 */
 var StateDisplay = document.getElementById('State');
 var DeathsDisplay = document.getElementById('Deaths');
-var crDisplay = document.getElementById('Crude Rate');
+var RateDisplay = document.getElementById('Rate');
 var stateID = null;
 
 map.on('mousemove', 'cancers', (e) => {
@@ -111,14 +111,14 @@ map.on('mousemove', 'cancers', (e) => {
   // Set variables equal to the current feature's state and deaths
   var stateState = e.features[0].properties.State;
   var stateDeaths = e.features[0].properties.Deaths;
-  var statecr = e.features[0].properties.cr;
+  var stateRate = e.features[0].properties.Rate;
 
   // Check whether features exist
   if (e.features.length > 0) {
     // Display the magnitude, location, and time in the sidebar
     StateDisplay.textContent = stateState;
     DeathsDisplay.textContent = stateDeaths;
-    crDisplay.textContent = statecr;
+    RateDisplay.textContent = stateRate;
 
     // If stateID for the hovered feature is not null,
     // use removeFeatureState to reset to the default behavior
