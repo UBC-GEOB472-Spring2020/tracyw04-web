@@ -1,6 +1,6 @@
 Welcome to the README file for my lab 2 project!
 
-Link to map: 
+Link to map: https://ubc-geob472-spring2020.github.io/tracyw04-web/lab2/cancers.html
 
 Reflective analysis: My goal within this interactive map was to map out changes in lung and bronchus cancer mortality per state in the U.S.A. from 1999-2016.
 The purpose of this map was to show if there are changes in total deaths in U.S.A. over these 17 years, as well as point out the main regions with the most number
