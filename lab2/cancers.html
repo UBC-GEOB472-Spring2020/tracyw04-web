@@ -61,6 +61,29 @@ border-radius: 3px;
  border-radius: 3px;
 }
 
+.legend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 30px;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+padding: 10px;
+position: absolute;
+right: 10px;
+z-index: 1;
+}
+
+.legend h4 {
+margin: 0 0 10px;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
 
 </style>
 </head>
@@ -71,8 +94,11 @@ border-radius: 3px;
    <div class='stateInfo'>
    <div><strong>State:</strong> <span id='State'></span></div>
    <div><strong>Total Deaths:</strong> <span id='Deaths'></span></div>
-   <div><strong>Crude Rate:</strong> <span id='Rate'></span></div>
-<div class='map-overlay' id='legend'></div>
+	  <div><strong>Death Rate:</strong> <span id='Rate'></span></div>
+	 <div class='map-overlay' id='legend'></div>
+	 <div id="stateInfo" class="legend">
+
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
 var map = new mapboxgl.Map({
@@ -111,14 +137,14 @@ map.on('mousemove', 'cancers', (e) => {
   // Set variables equal to the current feature's state and deaths
   var stateState = e.features[0].properties.State;
   var stateDeaths = e.features[0].properties.Deaths;
-  var stateRate = e.features[0].properties.Rate;
+	var stateRate = e.features[0].properties.Rate;
 
   // Check whether features exist
   if (e.features.length > 0) {
     // Display the magnitude, location, and time in the sidebar
     StateDisplay.textContent = stateState;
     DeathsDisplay.textContent = stateDeaths;
-    RateDisplay.textContent = stateRate;
+		RateDisplay.textContent = stateRate;
 
     // If stateID for the hovered feature is not null,
     // use removeFeatureState to reset to the default behavior
