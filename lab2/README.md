@@ -2,7 +2,7 @@ Lung and bronchus cancer mortality rate per state in the U.S.A. in 2016
 
 Welcome to the README file for my lab 2 project!
 
-Link to map: https://ubc-geob472-spring2020.github.io/tracyw04-web/lab2/cancers.html
+Link to map: https://ubc-geob472-spring2020.github.io/tracyw04-web/lab2/cancer.html
 
 Reflective analysis: My goal within this interactive map was to map out lung and bronchus cancer mortality rate per state in the U.S.A. in 2016.
 The purpose of this map was to show if there are changes in total deaths in U.S.A. over different states, as well as point out the main states with the highest mortality rates. I hence normalized all total deaths by population to get the mortality rate. The purpose is to show the general audience, as well as state parties the states most affected, which can be beneficial when enacting state-specific 
