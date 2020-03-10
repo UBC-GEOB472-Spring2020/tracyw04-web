@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Lung and Bronchus Cancer Deaths Rate in U.S.A. in 2016</title>
+<title>Lung and Bronchus Cancer Crude Rate in U.S.A. in 2016</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
@@ -62,24 +62,24 @@ p {
   line-height: 18px;
   height: 150px;
   margin-bottom: 40px;
-  width: 100px;
+  width: 250px;
 }
 
 .legend-key {
   display: inline-block;
   border-radius: 20%;
-  width: 10px;
-  height: 10px;
-  margin-right: 5px;
+  width: 15px;
+  height: 12px;
+  margin-right: 15px;
 }
 
 </style>
 </head>
 <body>
 <div id='map'></div>
-<div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Deaths Rate in U.S.A. in 2016</h2>
+<div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Crude Rates in U.S.A. in 2016</h2>
   <div id='pd'><p>Hover over a state!</p></div></div>
-<div class='map-overlay' id='legend'></div>
+<div class='map-overlay' id='legend'><h10>Crude Rate (%)</h10></div>
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
@@ -91,8 +91,8 @@ zoom: 4.3 // starting zoom
 });
 
 map.on('load', function() {
-  var layers = ['0-10', '10-20', '20-50', '50-100', '100-200', '200-500', '500-1000', '1000+'];
-  var colors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
+  var layers = ['0  - 20', '20 - 30', '30 - 40', '40 - 50', '50 - 60', '60 - 70', '70+'];
+  var colors = ['#FDFEEB','#FCFCAB', '#FCDF97', '#F69637', '#F95706', '#FA0505', '#811803'];
 
   for (i = 0; i < layers.length; i++) {
     var layer = layers[i];
@@ -115,11 +115,12 @@ map.on('load', function() {
   });
 
   if (states.length > 0) {
-    document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><strong><em>' +
+    document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><em>' +
       '<h3><strong><p>Deaths: ' + states[0].properties.Deaths + '</strong></em></p>' +
       '<h3><strong><p>Death Rate: ' + states[0].properties.Rate + '</strong></em></p>';
   } else {
-    document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>';
+    document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>'
+    ;
   }
 });
 
