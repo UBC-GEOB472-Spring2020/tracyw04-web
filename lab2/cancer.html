@@ -53,7 +53,7 @@ p {
   top: 0;
   height: 120px;
   margin-top: 20px;
-  width: 545px;
+  width: 560px;
 }
 
 #legend {
@@ -115,9 +115,9 @@ map.on('load', function() {
   });
 
   if (states.length > 0) {
-    document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><em>' +
-      '<h3><strong><p>Deaths: ' + states[0].properties.Deaths + '</strong></em></p>' +
-      '<h3><strong><p>Death Rate: ' + states[0].properties.Rate + '</strong></em></p>';
+    document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><em>'
+    + '<h3><strong><p>Deaths: ' + states[0].properties.Deaths + '</strong></em></p>'
+    +  '<h3><strong><p>Death Rate: ' + states[0].properties.Rate + '</strong></em></p>';
   } else {
     document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>'
     ;
