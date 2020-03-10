@@ -17,8 +17,9 @@ crude rates ranged from 15-60%. I wanted areas of higher values to be darker, an
 picked a gradient from light yellow to dark red. Visual hierachy was accomplished by using these dark colors on top of the grey background and
 in contrast with the lighter colors of the gradient. The effect came out nice, as it's quite easy to read. 
 ![Capture](https://user-images.githubusercontent.com/39570002/76267083-d7619f80-6226-11ea-9e62-832cf3fb880b.PNG) illustrates this concept well. 
-Improvements to this map perhaps having a search engine, or listing the top states affected and by how much.
+Improvements to this map perhaps having a search engine, or listing the top states affected and by how much. 
 
 Collaborations: Although I had a hovering thing to identify the Deaths, Crude Rate and State, my friend recommended that I still put a legend
 as it could help for first glance. Additionally, my friend recommended I use a better font for my states, as the holo made it hard to read. 
- I decided to put a legend in, but it was very hard and it was glitching quite a bit. Data source: https://wonder.cdc.gov/cancer.html
+I decided to put a legend in, but it was very hard and it was glitching quite a bit. I finally managed to get it working :)
+ Data source: https://wonder.cdc.gov/cancer.html

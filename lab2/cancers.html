@@ -7,6 +7,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
 <style>
+
 body {
   margin: 0;
   padding: 0;
@@ -28,6 +29,7 @@ p {
   text-align: left;
 }
 
+
 #map {
   position: absolute;
   top: 0;
@@ -35,57 +37,49 @@ p {
   width: 100%;
 }
 
+
 .map-overlay {
-	position: absolute;
-	font-family: sans-serif;
-	margin-bottom: 40px;
-	margin-left: 5px;
-	padding: 5px;
-	width: 80%;
-	font-size: 14px;
-	color: #000000;
-border-radius: 3px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 5px;
 }
 
-.stateInfo {
- position: absolute;
- bottom: 0;
- left: 10px;
- background: rgba(255, 255, 255, 0.8);
- margin-right: 20px;
- font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
- border: 2px solid black;
- overflow: auto;
- width: 26%;
- background-color: #fff;
- border-radius: 3px;
+#features {
+  top: 0;
+  height: 120px;
+  margin-top: 20px;
+  width: 545px;
 }
 
-.legend {
-    line-height: 18px;
-    color: #555;
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: 150px;
+  margin-bottom: 40px;
+  width: 100px;
 }
-.legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
 }
 
 </style>
 </head>
 <body>
-<div id="map"></div>
-<div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Death Rate in U.S.A. in 2016</h2>
-	<div id='pd'><p>Data provided by CDC WONDER</p></div></div>
-   <div class='stateInfo'>
-   <div><strong>State:</strong> <span id='State'></span></div>
-   <div><strong>Total Deaths:</strong> <span id='Deaths'></span></div>
-	  <div><strong>Death Rate:</strong> <span id='Rate'></span></div>
-	 <div class='map-overlay' id='legend'></div>
-	 <div id="stateInfo" class="legend">
-
+<div id='map'></div>
+<div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Deaths Rate in U.S.A. in 2016</h2>
+  <div id='pd'><p>Hover over a state!</p></div></div>
+<div class='map-overlay' id='legend'></div>
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoidHJhY3l3MDQiLCJhIjoiY2s2aDZvZXM3MDhjcDNkbnh1N3RjMTQyciJ9.tizMJBLoK0sqpa2bGsr6Qw';
@@ -96,68 +90,41 @@ center: [-96, 39], // starting position
 zoom: 4.3 // starting zoom
 });
 
-var StateDisplay = document.getElementById('State');
-var DeathsDisplay = document.getElementById('Deaths');
-var RateDisplay = document.getElementById('Rate');
-var stateID = null;
+map.on('load', function() {
+  var layers = ['0-10', '10-20', '20-50', '50-100', '100-200', '200-500', '500-1000', '1000+'];
+  var colors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026'];
 
-map.on('mousemove', 'cancers', (e) => {
+  for (i = 0; i < layers.length; i++) {
+    var layer = layers[i];
+    var color = colors[i];
+    var item = document.createElement('div');
+    var key = document.createElement('span');
+    key.className = 'legend-key';
+    key.style.backgroundColor = color;
 
-  map.getCanvas().style.cursor = 'pointer';
-  // Set variables equal to the current feature's state and deaths
-  var stateState = e.features[0].properties.State;
-  var stateDeaths = e.features[0].properties.Deaths;
-	var stateRate = e.features[0].properties.Rate;
+    var value = document.createElement('span');
+    value.innerHTML = layer;
+    item.appendChild(key);
+    item.appendChild(value);
+    legend.appendChild(item);
+  }
 
-  // Check whether features exist
-  if (e.features.length > 0) {
-    // Display the State, deaths and crude Rate in the sidebar
-    StateDisplay.textContent = stateState;
-    DeathsDisplay.textContent = stateDeaths;
-		RateDisplay.textContent = stateRate;
+  map.on('mousemove', function(e) {
+  var states = map.queryRenderedFeatures(e.point, {
+    layers: ['cancers']
+  });
 
-    // If stateID for the hovered feature is not null,
-    // use removeFeatureState to reset to the default behavior
-    if (stateID) {
-      map.removeFeatureState({
-        source: "cancers",
-        id: stateID
-      });
-    }
-
-    stateID = e.features[0].id;
-
-    // When the mouse moves over the cancers layer, update the
-    // feature state for the feature under the mouse
-    map.setFeatureState({
-      source: 'cancers',
-      id: stateID,
-    }, {
-      hover: true
-    });
-
+  if (states.length > 0) {
+    document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><strong><em>' +
+      '<h3><strong><p>Deaths: ' + states[0].properties.Deaths + '</strong></em></p>' +
+      '<h3><strong><p>Death Rate: ' + states[0].properties.Rate + '</strong></em></p>';
+  } else {
+    document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>';
   }
 });
 
-var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-        labels = [];
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
-
-    return div;
-};
-
-legend.addTo(map);
+map.getCanvas().style.cursor = 'default';
+});
 
 </script>
 
