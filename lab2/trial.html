@@ -6,6 +6,8 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 
 body {
@@ -49,11 +51,55 @@ p {
   border-radius: 5px;
 }
 
+.map-overlay .map-overlay-inner {
+background-color: #fff;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+border-radius: 3px;
+padding: 10px;
+margin-bottom: 10px;
+}
+
+.map-overlay-inner fieldset {
+border: none;
+padding: 0;
+margin: 0 0 10px;
+}
+
+.map-overlay-inner fieldset:last-child {
+margin: 0;
+}
+
+.map-overlay-inner select {
+width: 100%;
+}
+
+.map-overlay-inner label {
+display: block;
+font-weight: bold;
+margin: 0 0 5px;
+}
+
+.map-overlay-inner button {
+display: inline-block;
+width: 36px;
+height: 20px;
+border: none;
+cursor: pointer;
+}
+
+.map-overlay-inner button:focus {
+outline: none;
+}
+
+.map-overlay-inner button:hover {
+box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
 #features {
   top: 0;
   height: 150px;
   margin-top: 20px;
-  width: 280px;
+  width: 300px;
 }
 
 #legend {
@@ -62,7 +108,7 @@ p {
   line-height: 18px;
   height: 150px;
   margin-bottom: 40px;
-  width: 125px;
+  width: 140px;
 }
 
 .legend-key {
@@ -78,7 +124,19 @@ p {
 <body>
 <div id='map'></div>
 <div class='map-overlay' id='features'><h2>Lung and Bronchus Cancer Crude Rates in USA in 2016</h2>
+  <div class="map-overlay top">
+  <div class="map-overlay-inner">
+  <fieldset>
+  <label>Pick a layer</label>
+  <select id="layer" name="layer">
+  <option value="total_deaths">Total Deaths</option>
+  <option value="cancers">Crude Rate</option>
+  </select>
+  </fieldset>
+  </div>
+  </div>
   <div id='pd'><p>Hover over a state!</p></div></div>
+
 <div class='map-overlay' id='legend'><h10>Crude Rate (%)</h10></div>
 
 <script>
@@ -89,6 +147,12 @@ style: 'mapbox://styles/tracyw04/ck7kvsl4g4o9e1ipsacsssrwp', //hosted style id
 center: [-96, 39], // starting position
 zoom: 4.3 // starting zoom
 });
+
+var layers = document.getElementById('menu-ui');
+
+addLayer(L.mapbox.styleLayer('mapbox://styles/tracyw04/ck7kvsl4g4o9e1ipsacsssrwp'), 'Base Map', 1);
+addLayer(L.mapbox.tileLayer('cancers'), 'Crude Rate', 2);
+addLayer(L.mapbox.tileLayer('total_deaths'), 'Total Deaths', 3);
 
 map.on('load', function() {
   var layers = ['0  - 20', '20 - 30', '30 - 40', '40 - 50', '50 - 60', '60 - 70', '70+'];
@@ -117,7 +181,7 @@ map.on('load', function() {
   if (states.length > 0) {
     document.getElementById('pd').innerHTML = '<h3><strong><p>State: ' + states[0].properties.State + '</strong></h3></p><em>'
     + '<h3><strong><p>Deaths: ' + states[0].properties.Deaths + '</strong></em></p>'
-    +  '<h3><strong><p>Death Rate: ' + states[0].properties.Rate + '</strong></em></p>';
+    +  '<h3><strong><p>Crude Rate: ' + states[0].properties.Rate + '</strong></em></p>';
   } else {
     document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>'
     ;
